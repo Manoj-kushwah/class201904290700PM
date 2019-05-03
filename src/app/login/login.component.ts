@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {ApiService} from '../services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,9 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-  constructor() { }
+  constructor(private api: ApiService) {
+    console.log('api: ', api);
+  }
 
   ngOnInit() {
   }
@@ -17,6 +20,11 @@ export class LoginComponent implements OnInit {
   public login(form: NgForm): boolean {
     console.log('login ', form);
     console.log('value: ', form.value);
+    this.api.login(form.value).then((res: Response) => {
+      console.log('res: ', res);
+    }).catch((error) => {
+      console.error('error: ', error);
+    });
     return false;
   }
 }
